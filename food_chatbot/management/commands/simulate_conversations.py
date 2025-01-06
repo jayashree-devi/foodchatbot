@@ -40,4 +40,7 @@ class Command(BaseCommand):
             )
             bot_message = chat_completion.choices[0].message.content
             Conversation.objects.create(user=user, user_message=user_message, bot_response=bot_message)
-            self.stdout.write(self.style.SUCCESS(f"Simulated User{i}"))
+            if created:
+                self.stdout.write(self.style.SUCCESS(f"Created and Simulated User{i}"))
+            else:
+                self.stdout.write(self.style.SUCCESS(f"Simulated User{i}"))
