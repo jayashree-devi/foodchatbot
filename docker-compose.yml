@@ -5,7 +5,12 @@ services:
     env_file:
       - .env
     container_name: django_app
-    command: sh -c "python manage.py migrate && python manage.py createsuperuser --noinput && python manage.py runserver 0.0.0.0:8000"
+    command: >
+      sh -c "
+      python manage.py migrate && 
+      python manage.py create_superuser && 
+      python manage.py simulate_conversations && 
+      python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
@@ -26,7 +31,7 @@ services:
       - db
 
   db:
-    image: mariadb:10.6
+    image: mariadb:11.6
     container_name: mariadb
     restart: always
     env_file:
