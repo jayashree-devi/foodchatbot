@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" href="{% static 'media/favicon.ico' %}">
+        {% block head %}
+            {% block stylesheets %}
+                {% block site-core-stylesheets %}
+                    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+                    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+                {% endblock %}
+            {% endblock %}
+            <title>
+                {% block title %} Welcome to Food ChatBot {% endblock %}
+            </title>
+        {% endblock %}
+    </head>
+
+    {% block body %}
+    <body class="d-flex flex-column min-vh-100 main-wrapper">
+        {% block content %}
+            <div id="container">
+                {% block header-body %}
+                    {% block header %}
+                        <header>
+                            {% block nav-bar %}
+                                <!-- Page header  -->
+                                {% include "header.html" %}
+                            {% endblock %}
+                        </header>
+                    {% endblock %}
+                    <div id="content">
+                        <!-- Page Content  -->
+                        {% block content-body %}
+                            <div class="container-fluid site-content text-center P-3">
+                                <h3>Welcome to Food ChatBot</h3>
+                                <p>I am here to help you make your food choices and list your favourite foods.</p>
+                            </div>
+                            <!-- Chatbot box  -->
+                            {% include "chatbotbox.html" %}
+
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            </div>
+        {% endblock %}
+
+        {% block footer %}
+            <footer class="mt-auto">
+
+                {% block footer-content %}
+                    {% include "footer.html" %}
+                {% endblock %}
+
+                {% block javascripts %}
+                        {% block site-core-javascripts %}
+                            <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+                            <script src="{% static 'js/bootstrap.min.js' %}"></script>
+                            <script src="{% static 'js/home.js' %}"></script>
+                        {% endblock %}
+                {% endblock %}
+
+            </footer>
+        {% endblock %}
+    </body>
+    {% endblock %}
+</html>
