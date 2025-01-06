@@ -43,4 +43,5 @@ class Command(BaseCommand):
             if created:
                 self.stdout.write(self.style.SUCCESS(f"Created and Simulated User{i}"))
             else:
-                self.stdout.write(self.style.SUCCESS(f"Simulated User{i}"))
+                # self.stdout.write(self.style.SUCCESS(f"Simulated User{i}"))
+                break
