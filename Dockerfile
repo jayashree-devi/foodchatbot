@@ -23,6 +23,9 @@ RUN pip install -r requirements.txt
 # Copy the entire Django project into the container
 COPY . /app
 
+# Copy environment file (ensure it exists in the directory)
+COPY .env /app/
+
 # Expose the port the app will run on
 EXPOSE 8000
 
