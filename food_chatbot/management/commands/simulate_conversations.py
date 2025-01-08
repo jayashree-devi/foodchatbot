@@ -16,8 +16,8 @@ class Command(BaseCommand):
         vegetarian_foods = ["Veggie salad", "Pasta", "Sushi", "Tacos", "Rice", "Ice Cream", "Fruit Juice"]
 
         for i in range(1, 101):
-            # Randomly assign whether the user is vegetarian
-            is_vegetarian = random.choice([True, False])
+            # assign whether the user is vegetarian on basis of odd/even number
+            is_vegetarian = i % 2
 
             # Select top 3 favorite foods
             if is_vegetarian:
@@ -29,6 +29,9 @@ class Command(BaseCommand):
             user, created = User.objects.get_or_create(
                 name=f"User{i}"
             )
+            user.is_vegetarian = is_vegetarian
+            user.favorite_foods = favorite_foods
+            user.save()
             user_message = ', '.join(favorite_foods)
             client = OpenAI(api_key=settings.OPENAI_API_KEY)
             chat_completion = client.chat.completions.create(
@@ -36,7 +39,7 @@ class Command(BaseCommand):
                     {"role": "system", "content": "You are a chatbot that helps users list their three favorite foods."},
                     {"role": "user", "content": user_message}
                 ],
-                model="gpt-4o"
+                model="gpt-4o-mini"
             )
             bot_message = chat_completion.choices[0].message.content
             Conversation.objects.create(user=user, user_message=user_message, bot_response=bot_message)
