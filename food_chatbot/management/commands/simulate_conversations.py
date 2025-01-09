@@ -15,7 +15,7 @@ class Command(BaseCommand):
                         "Steak", "Fried Chicken", "Biriyani", "Rice", "Veggie salad", "Fruit Juice"]
         vegetarian_foods = ["Veggie salad", "Pasta", "Sushi", "Tacos", "Rice", "Ice Cream", "Fruit Juice"]
 
-        for i in range(1, 8):
+        for i in range(1, 101):
             # assign whether the user is vegetarian on basis of odd/even number
             is_vegetarian = i % 2
 
