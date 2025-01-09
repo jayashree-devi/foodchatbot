@@ -15,7 +15,7 @@ class Command(BaseCommand):
                         "Steak", "Fried Chicken", "Biriyani", "Rice", "Veggie salad", "Fruit Juice"]
         vegetarian_foods = ["Veggie salad", "Pasta", "Sushi", "Tacos", "Rice", "Ice Cream", "Fruit Juice"]
 
-        for i in range(1, 101):
+        for i in range(1, 8):
             # assign whether the user is vegetarian on basis of odd/even number
             is_vegetarian = i % 2
 
@@ -33,16 +33,19 @@ class Command(BaseCommand):
             user.favorite_foods = favorite_foods
             user.save()
             user_message = ', '.join(favorite_foods)
-            client = OpenAI(api_key=settings.OPENAI_API_KEY)
-            chat_completion = client.chat.completions.create(
-                messages=[
-                    {"role": "system", "content": "You are a chatbot that helps users list their three favorite foods."},
-                    {"role": "user", "content": user_message}
-                ],
-                model="gpt-4o-mini"
-            )
-            bot_message = chat_completion.choices[0].message.content
-            Conversation.objects.create(user=user, user_message=user_message, bot_response=bot_message)
+            try:
+                client = OpenAI(api_key=settings.OPENAI_API_KEY)
+                chat_completion = client.chat.completions.create(
+                    messages=[
+                        {"role": "system", "content": "You are a chatbot that helps users list their three favorite foods."},
+                        {"role": "user", "content": user_message}
+                    ],
+                    model="gpt-4o-mini"
+                )
+                bot_message = chat_completion.choices[0].message.content
+                Conversation.objects.create(user=user, user_message=user_message, bot_response=bot_message)
+            except Exception as e:
+                print("Error:", str(e))
             if created:
                 self.stdout.write(self.style.SUCCESS(f"Created and Simulated User{i}"))
             else:
