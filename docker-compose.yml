@@ -7,6 +7,7 @@ services:
     container_name: django_app
     command: >
       sh -c "
+      sh wait_for_db.sh &&
       python manage.py migrate && 
       python manage.py create_superuser && 
       python manage.py simulate_conversations && 
